@@ -77,7 +77,7 @@ namespace NestedUnitTests
 
             if (General.Instance.OpenNewFile)
             {
-                await VS.Documents.OpenAsync(testFilePath);
+                await VS.Documents.OpenViaProjectAsync(testFilePath);
             }
             else
             {
