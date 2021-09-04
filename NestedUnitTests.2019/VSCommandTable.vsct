@@ -25,7 +25,7 @@
         <Parent guid="NestedUnitTests" id="PrepareProjectMenuGroup" />
         <!--<CommandFlag>DefaultInvisible</CommandFlag>-->
         <CommandFlag>DynamicVisibility</CommandFlag>
-        <!--<Icon guid="logo2_16_gallery" id="logo2_16" />-->
+        <Icon guid="logo_16_gallery" id="logo_16" />
         <Strings>
           <ButtonText>Prepare project for nested unit tests...</ButtonText>
         </Strings>
@@ -35,17 +35,25 @@
         <Parent guid="NestedUnitTests" id="AddFileMenuGroup" />
         <!--<CommandFlag>DefaultInvisible</CommandFlag>-->
         <CommandFlag>DynamicVisibility</CommandFlag>
-        <!--<Icon guid="logo2_16_gallery" id="logo2_16" />-->
+        <Icon guid="logo_16_gallery" id="logo_16" />
         <Strings>
           <ButtonText>Add unit tests...</ButtonText>
         </Strings>
       </Button>
 
     </Buttons>
+
+    <Bitmaps>
+      <Bitmap guid="logo_16_gallery" href="Resources\logo_16.png" usedList="logo_16" />
+    </Bitmaps>
     
   </Commands>
 
   <Symbols>
+    <GuidSymbol name="logo_16_gallery" value="{7C4E9E67-A0A2-4765-8B77-7F11033FDAFD}">
+      <IDSymbol name="logo_16" value="1" />
+    </GuidSymbol>
+
     <GuidSymbol name="NestedUnitTests" value="{2853C238-E3A4-48B9-AD54-234807D8B2D3}">
 
       <IDSymbol name="PrepareProjectMenuGroup" value="0x8821" />

@@ -12,6 +12,9 @@ namespace NestedUnitTests
     /// </summary>
     internal sealed partial class PackageGuids
     {
+        public const string logo_16_galleryString = "7c4e9e67-a0a2-4765-8b77-7f11033fdafd";
+        public static Guid logo_16_gallery = new Guid(logo_16_galleryString);
+
         public const string NestedUnitTestsString = "2853c238-e3a4-48b9-ad54-234807d8b2d3";
         public static Guid NestedUnitTests = new Guid(NestedUnitTestsString);
     }
@@ -20,6 +23,7 @@ namespace NestedUnitTests
     /// </summary>
     internal sealed partial class PackageIds
     {
+        public const int logo_16 = 0x0001;
         public const int PrepareProjectMenuGroup = 0x8821;
         public const int PrepareProjectCommandId = 0x8921;
         public const int AddFileMenuGroup = 0x8822;
