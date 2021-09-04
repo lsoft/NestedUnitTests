@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="NestedUnitTests.a2dc821e-8edc-4842-9da4-515cfcd19006" Version="0.2" Language="en-US" Publisher="lsoft" />
+    <Identity Id="NestedUnitTests.a2dc821e-8edc-4842-9da4-515cfcd19006" Version="0.2.1" Language="en-US" Publisher="lsoft" />
     <DisplayName>Nested Unit Tests</DisplayName>
     <Description>What's about to move your unit tests closer to the code?</Description>
     <Icon>Resources\logo.png</Icon>

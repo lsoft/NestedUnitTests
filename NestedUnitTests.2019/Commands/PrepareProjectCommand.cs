@@ -72,7 +72,7 @@ namespace NestedUnitTests
             var compileNode = new XElement(
                 "Compile",
                 new XAttribute(
-                    "Include",
+                    "Update",
                     @$"**\*.*.{suffix}.cs"
                     ),
                 Environment.NewLine + new string(' ', pgIntend * 3),
