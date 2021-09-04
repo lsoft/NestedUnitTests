@@ -62,10 +62,6 @@ namespace NestedUnitTests
                     ? "Fixture"
                     : General.Instance.FileNameSuffix;
 
-            pg?.Add(new string(' ', pgIntend));
-            pg?.Add(new XElement("DefaultItemExcludes", $"$(DefaultItemExcludes);**/*.?.{suffix}.cs"));
-            pg?.Add(Environment.NewLine + new string(' ', pgIntend));
-
             var itemGroupNode = new XElement(
                 "ItemGroup",
                 null
@@ -73,26 +69,23 @@ namespace NestedUnitTests
 
             itemGroupNode.Add(Environment.NewLine);
 
-            for (var index = 0; index < 10; index++)
-            {
-                var compileNode = new XElement(
-                    "Compile",
-                    new XAttribute(
-                        "Include",
-                        @$"**\*.{index}.{suffix}.cs"
-                        ),
-                    Environment.NewLine + new string(' ', pgIntend * 3),
-                    new XElement(
-                        "DependentUpon",
-                        $"$([System.String]::Copy(%(Filename)).Replace('.{index}.{suffix}', '.cs'))"
-                        ),
-                    Environment.NewLine + new string(' ', pgIntend * 2)
-                    );
+            var compileNode = new XElement(
+                "Compile",
+                new XAttribute(
+                    "Include",
+                    @$"**\*.*.{suffix}.cs"
+                    ),
+                Environment.NewLine + new string(' ', pgIntend * 3),
+                new XElement(
+                    "DependentUpon",
+                    $@"$([System.Text.RegularExpressions.Regex]::Replace(%(Filename), '(\.\d+\.{suffix})', '.cs'))"
+                    ),
+                Environment.NewLine + new string(' ', pgIntend * 2)
+                );
 
-                itemGroupNode.Add(new string(' ', pgIntend * 2));
-                itemGroupNode.Add(compileNode);
-                itemGroupNode.Add(Environment.NewLine);
-            }
+            itemGroupNode.Add(new string(' ', pgIntend * 2));
+            itemGroupNode.Add(compileNode);
+            itemGroupNode.Add(Environment.NewLine);
 
             itemGroupNode.Add(new string(' ', pgIntend));
 

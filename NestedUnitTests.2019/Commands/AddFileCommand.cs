@@ -1,5 +1,4 @@
 ﻿using Community.VisualStudio.Toolkit;
-using EnvDTE80;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.VisualStudio.Shell;
@@ -7,8 +6,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml.Linq;
-using System.Xml.XPath;
 using Task = System.Threading.Tasks.Task;
 
 namespace NestedUnitTests
@@ -50,16 +47,11 @@ namespace NestedUnitTests
 
             var fileInfo = new FileInfo(fileFullPath);
 
-            if (!TryGetTestFileData(
+            GetTestFileData(
                 fileInfo,
                 out var testFileName,
                 out var testClassName
-                ))
-            {
-                //no more 10 unit tests files!
-                await VS.MessageBox.ShowErrorAsync($"Maximum unit tests file count is reached!");
-                return;
-            }
+                );
 
             var fileFolderPath = fileInfo.Directory.FullName;
             var testFilePath = Path.Combine(fileFolderPath, testFileName);
@@ -77,7 +69,8 @@ namespace NestedUnitTests
 
             if (General.Instance.OpenNewFile)
             {
-                await VS.Documents.OpenViaProjectAsync(testFilePath);
+                //await VS.Documents.OpenViaProjectAsync(testFilePath);
+                await VS.Documents.OpenAsync(testFilePath);
             }
             else
             {
@@ -85,7 +78,7 @@ namespace NestedUnitTests
             }
         }
 
-        private bool TryGetTestFileData(
+        private void GetTestFileData(
             FileInfo fileInfo,
             out string testFileName,
             out string testClassName
@@ -99,21 +92,23 @@ namespace NestedUnitTests
             var fileNameWithoutExtension = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length);
             var fileFolderPath = fileInfo.Directory.FullName;
 
-            for (var index = 0; index < 10; index++)
+            var index = 0;
+            while(true)//for (var index = 0; index < 10; index++)
             {
+                //var sfindex = index == 0 ? string.Empty : $"{index}.";
+                //var scindex = index == 0 ? string.Empty : $"{index}_";
+
                 testFileName = $"{fileNameWithoutExtension}.{index}.{General.Instance.FileNameSuffix}.cs";
                 testClassName = $"{fileNameWithoutExtension}_{index}_{General.Instance.FileNameSuffix}";
 
                 var testFilePath = Path.Combine(fileFolderPath, testFileName);
                 if (!File.Exists(testFilePath))
                 {
-                    return true;
+                    return;
                 }
-            }
 
-            testFileName = null;
-            testClassName = null;
-            return false;
+                index++;
+            }
         }
 
         private async Task<string> GetTargetNamespaceAsync(
