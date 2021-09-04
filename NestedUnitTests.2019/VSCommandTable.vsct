@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <Extern href="stdidcmd.h"/>
+  <Extern href="vsshlids.h"/>
+  <Include href="KnownImageIds.vsct"/>
+  <Include href="VSGlobals.vsct"/>
+
+  <Commands package="NestedUnitTests">
+
+    <Groups>
+
+      <Group guid="NestedUnitTests" id="PrepareProjectMenuGroup" priority="0x07de">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE" />
+      </Group>
+      <Group guid="NestedUnitTests" id="AddFileMenuGroup" priority="0x07df">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE" />
+      </Group>
+
+    </Groups>
+
+    <Buttons>
+
+      <Button guid="NestedUnitTests" id="PrepareProjectCommandId" priority="0x0102" type="Button">
+        <Parent guid="NestedUnitTests" id="PrepareProjectMenuGroup" />
+        <!--<CommandFlag>DefaultInvisible</CommandFlag>-->
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <!--<Icon guid="logo2_16_gallery" id="logo2_16" />-->
+        <Strings>
+          <ButtonText>Prepare project for nested unit tests...</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="NestedUnitTests" id="AddFileCommandId" priority="0x0103" type="Button">
+        <Parent guid="NestedUnitTests" id="AddFileMenuGroup" />
+        <!--<CommandFlag>DefaultInvisible</CommandFlag>-->
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <!--<Icon guid="logo2_16_gallery" id="logo2_16" />-->
+        <Strings>
+          <ButtonText>Add unit tests...</ButtonText>
+        </Strings>
+      </Button>
+
+    </Buttons>
+    
+  </Commands>
+
+  <Symbols>
+    <GuidSymbol name="NestedUnitTests" value="{2853C238-E3A4-48B9-AD54-234807D8B2D3}">
+
+      <IDSymbol name="PrepareProjectMenuGroup" value="0x8821" />
+      <IDSymbol name="PrepareProjectCommandId" value="0x8921" />
+
+      <IDSymbol name="AddFileMenuGroup" value="0x8822" />
+      <IDSymbol name="AddFileCommandId" value="0x8922" />
+
+
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>
