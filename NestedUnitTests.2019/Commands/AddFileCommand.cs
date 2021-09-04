@@ -96,11 +96,11 @@ namespace NestedUnitTests
                 throw new ArgumentNullException(nameof(fileInfo));
             }
 
-            for(var index = 0; index < 10; index++)
-            {
-                var fileNameWithoutExtension = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length);
-                var fileFolderPath = fileInfo.Directory.FullName;
+            var fileNameWithoutExtension = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length);
+            var fileFolderPath = fileInfo.Directory.FullName;
 
+            for (var index = 0; index < 10; index++)
+            {
                 testFileName = $"{fileNameWithoutExtension}.{index}.{General.Instance.FileNameSuffix}.cs";
                 testClassName = $"{fileNameWithoutExtension}_{index}_{General.Instance.FileNameSuffix}";
 
@@ -109,8 +109,6 @@ namespace NestedUnitTests
                 {
                     return true;
                 }
-
-                index++;
             }
 
             testFileName = null;
