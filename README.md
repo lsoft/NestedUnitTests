@@ -14,8 +14,7 @@ What's about to move your unit tests closer to the code?
 To exclude you tests from compilation for production use the following construction `dotnet build /p:DefineConstants=SKIP_NESTED_TESTS`.
 
 
-
-This is a very early version of the vsix!
+This is a very early version of the vsix! You can download it for Visual Studio 2019 [here](https://marketplace.visualstudio.com/items?itemName=lsoft.NestedUnitTests).
 
 ## Screenshots
 
