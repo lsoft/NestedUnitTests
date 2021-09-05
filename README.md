@@ -1,6 +1,8 @@
 # Nested Unit Tests Visual Studio Extension
 
-What's about to move your unit tests closer to the code?
+What's about to move your unit tests closer to the code? This project proposes to check whether life would be easier if the unit tests lay next to the code they are testing?
+
+Of course, this approach will bring new difficulties. For example: you will need to exclude that tests from your production-ready binaries. Fair price for your convenience, isn't?
 
 ## How to try
 
