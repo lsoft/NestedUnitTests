@@ -4,8 +4,9 @@ What's about to move your unit tests closer to the code?
 
 ## How to try
 
-- Create a new class library for netcore or net5/6 (with SDK style csproj)
-- Click RMB on project node in Solution Explorer and choose [Prepare project for nested unit tests](1.png)
+- Open your Visual Studio 2019 and waits for `NestedUnitTests` Vsix finished its loading.
+- Create a new C# class library.
+- **If you are using SDK style project**: click RMB on project node in Solution Explorer and choose [Prepare project for nested unit tests](1.png)
 - Click RMB on C# file node in Solution Explorer and choose [Add unit tests](2.png)
 - New C# file with the unit test can now be opened under the [file you choosed](3.png).
 

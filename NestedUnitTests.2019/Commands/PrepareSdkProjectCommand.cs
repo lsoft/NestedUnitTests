@@ -1,6 +1,6 @@
 ﻿using Community.VisualStudio.Toolkit;
-using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
+using NestedUnitTests.Helpers;
 using System;
 using System.IO;
 using System.Linq;
@@ -10,15 +10,15 @@ using Task = System.Threading.Tasks.Task;
 
 namespace NestedUnitTests
 {
-    [Command(PackageGuids.NestedUnitTestsString, PackageIds.PrepareProjectCommandId)]
-    internal sealed class PrepareProjectCommand : BaseCommand<PrepareProjectCommand>
+    [Command(PackageGuids.NestedUnitTestsString, PackageIds.PrepareSdkProjectCommandId)]
+    internal sealed class PrepareSdkProjectCommand : BaseCommand<PrepareSdkProjectCommand>
     {
         protected override void BeforeQueryStatus(EventArgs e)
         {
-            //TODO: check for project is sdk style
-            //TODO: check for this modification already done
+            UpdateBeforeQueryStatus();
 
             base.BeforeQueryStatus(e);
+
         }
 
         protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
@@ -31,7 +31,6 @@ namespace NestedUnitTests
             }
 
             var projectFullPath = project.FullPath;
-
             SurgeCsproj(projectFullPath);
         }
 
@@ -106,7 +105,42 @@ namespace NestedUnitTests
                     SaveOptions.None
                     );
             }
+        }
 
+        private void UpdateBeforeQueryStatus()
+        {
+            ThreadHelper.JoinableTaskFactory.Run(async delegate
+            {
+                await UpdateBeforeQueryStatusAsync();
+                //await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+            });
+        }
+
+        private async Task UpdateBeforeQueryStatusAsync()
+        {
+            var project = await VS.Solutions.GetActiveProjectAsync();
+            if (project == null)
+            {
+                Command.Visible = false;
+                return;
+            }
+
+            var projectFullPath = project.FullPath;
+            if (!projectFullPath.IsSdkStyle())
+            {
+                Command.Visible = false;
+                return;
+            }
+
+            if (new FileInfo(projectFullPath).Extension != ".csproj")
+            {
+                Command.Visible = false;
+                return;
+            }
+
+            //TODO: check for this modification already done
+
+            Command.Visible = true;
         }
 
     }

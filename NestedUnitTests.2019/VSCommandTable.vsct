@@ -10,7 +10,7 @@
 
     <Groups>
 
-      <Group guid="NestedUnitTests" id="PrepareProjectMenuGroup" priority="0x07de">
+      <Group guid="NestedUnitTests" id="PrepareSdkProjectMenuGroup" priority="0x07de">
         <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE" />
       </Group>
       <Group guid="NestedUnitTests" id="AddFileMenuGroup" priority="0x07df">
@@ -21,9 +21,9 @@
 
     <Buttons>
 
-      <Button guid="NestedUnitTests" id="PrepareProjectCommandId" priority="0x0102" type="Button">
-        <Parent guid="NestedUnitTests" id="PrepareProjectMenuGroup" />
-        <!--<CommandFlag>DefaultInvisible</CommandFlag>-->
+      <Button guid="NestedUnitTests" id="PrepareSdkProjectCommandId" priority="0x0102" type="Button">
+        <Parent guid="NestedUnitTests" id="PrepareSdkProjectMenuGroup" />
+        <CommandFlag>DefaultInvisible</CommandFlag>
         <CommandFlag>DynamicVisibility</CommandFlag>
         <Icon guid="logo_16_gallery" id="logo_16" />
         <Strings>
@@ -56,8 +56,8 @@
 
     <GuidSymbol name="NestedUnitTests" value="{2853C238-E3A4-48B9-AD54-234807D8B2D3}">
 
-      <IDSymbol name="PrepareProjectMenuGroup" value="0x8821" />
-      <IDSymbol name="PrepareProjectCommandId" value="0x8921" />
+      <IDSymbol name="PrepareSdkProjectMenuGroup" value="0x8821" />
+      <IDSymbol name="PrepareSdkProjectCommandId" value="0x8921" />
 
       <IDSymbol name="AddFileMenuGroup" value="0x8822" />
       <IDSymbol name="AddFileCommandId" value="0x8922" />

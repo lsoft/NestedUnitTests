@@ -1,7 +1,10 @@
 ﻿using Community.VisualStudio.Toolkit;
+using EnvDTE;
+using EnvDTE80;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.VisualStudio.Shell;
+using NestedUnitTests.Helpers;
 using System;
 using System.IO;
 using System.Linq;
@@ -23,6 +26,8 @@ namespace NestedUnitTests
 
         protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
         {
+            #region creating an unit tests file
+
             var file = await VS.Solutions.GetActiveItemAsync();
 
             if (file == null)
@@ -55,7 +60,7 @@ namespace NestedUnitTests
 
             var fileFolderPath = fileInfo.Directory.FullName;
             var testFilePath = Path.Combine(fileFolderPath, testFileName);
-            
+
             var testFileBody = GetUnitTestFileBody(
                 testClassName,
                 targetNamespace
@@ -67,15 +72,101 @@ namespace NestedUnitTests
                 System.Text.Encoding.UTF8
                 );
 
-            if (General.Instance.OpenNewFile)
+            #endregion
+
+            var project = await VS.Solutions.GetActiveProjectAsync();
+            var projectFilePath = project.FullPath;
+
+            if (projectFilePath.IsSdkStyle())
             {
-                //await VS.Documents.OpenViaProjectAsync(testFilePath);
-                await VS.Documents.OpenAsync(testFilePath);
+                await ProcessSdkStyleProjectAsync(project, fileFullPath, testFilePath);
             }
             else
             {
-                await VS.MessageBox.ShowAsync($"Unit tests file successfully added!");
+                await ProcessLegacyStyleProjectAsync(project, fileFullPath, testFilePath);
             }
+        }
+
+        private async Task ProcessLegacyStyleProjectAsync(
+            Community.VisualStudio.Toolkit.Project project,
+            string fileFullPath,
+            string testFilePath
+            )
+        {
+            if (project is null)
+            {
+                throw new ArgumentNullException(nameof(project));
+            }
+
+            if (fileFullPath is null)
+            {
+                throw new ArgumentNullException(nameof(fileFullPath));
+            }
+
+            if (testFilePath is null)
+            {
+                throw new ArgumentNullException(nameof(testFilePath));
+            }
+
+            if (!General.Instance.OpenNewFile)
+            {
+                await VS.MessageBox.ShowAsync($"Unit tests file successfully added!");
+                return;
+            }
+
+            await project.AddExistingFilesAsync(testFilePath);
+
+            var dte = await Package.GetServiceAsync(typeof(DTE)) as DTE2;
+            if (dte == null)
+            {
+                return;
+            }
+
+            var documentItem = dte.Solution.FindProjectItem(fileFullPath);
+            if (documentItem == null)
+            {
+                return;
+            }
+
+            documentItem.ProjectItems.AddFromFile(testFilePath);
+
+            //var frame = await document.OpenAsync();
+
+            //await VS.Documents.OpenViaProjectAsync(testFilePath);
+
+            await VS.Documents.OpenAsync(testFilePath);
+        }
+
+        private async Task ProcessSdkStyleProjectAsync(
+            Community.VisualStudio.Toolkit.Project project,
+            string fileFullPath,
+            string testFilePath
+            )
+        {
+            if (project is null)
+            {
+                throw new ArgumentNullException(nameof(project));
+            }
+
+            if (fileFullPath is null)
+            {
+                throw new ArgumentNullException(nameof(fileFullPath));
+            }
+
+            if (testFilePath is null)
+            {
+                throw new ArgumentNullException(nameof(testFilePath));
+            }
+
+
+            if (!General.Instance.OpenNewFile)
+            {
+                await VS.MessageBox.ShowAsync($"Unit tests file successfully added!");
+                return;
+            }
+
+            //await VS.Documents.OpenViaProjectAsync(testFilePath);
+            await VS.Documents.OpenAsync(testFilePath);
         }
 
         private void GetTestFileData(
@@ -93,11 +184,8 @@ namespace NestedUnitTests
             var fileFolderPath = fileInfo.Directory.FullName;
 
             var index = 0;
-            while(true)//for (var index = 0; index < 10; index++)
+            while(true)
             {
-                //var sfindex = index == 0 ? string.Empty : $"{index}.";
-                //var scindex = index == 0 ? string.Empty : $"{index}_";
-
                 testFileName = $"{fileNameWithoutExtension}.{index}.{General.Instance.FileNameSuffix}.cs";
                 testClassName = $"{fileNameWithoutExtension}_{index}_{General.Instance.FileNameSuffix}";
 

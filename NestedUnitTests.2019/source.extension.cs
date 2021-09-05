@@ -8,11 +8,11 @@ namespace NestedUnitTests
     internal sealed partial class Vsix
     {
         public const string Id = "NestedUnitTests.a2dc821e-8edc-4842-9da4-515cfcd19006";
-        public const string Name = "NestedUnitTests";
-        public const string Description = @"Empty VSIX Project.";
+        public const string Name = "Nested Unit Tests";
+        public const string Description = @"What's about to move your unit tests closer to the code?";
         public const string Language = "en-US";
-        public const string Version = "1.0";
-        public const string Author = "ls";
+        public const string Version = "0.3";
+        public const string Author = "lsoft";
         public const string Tags = "";
     }
 }

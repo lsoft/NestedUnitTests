@@ -24,8 +24,8 @@ namespace NestedUnitTests
     internal sealed partial class PackageIds
     {
         public const int logo_16 = 0x0001;
-        public const int PrepareProjectMenuGroup = 0x8821;
-        public const int PrepareProjectCommandId = 0x8921;
+        public const int PrepareSdkProjectMenuGroup = 0x8821;
+        public const int PrepareSdkProjectCommandId = 0x8921;
         public const int AddFileMenuGroup = 0x8822;
         public const int AddFileCommandId = 0x8922;
     }

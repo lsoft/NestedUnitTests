@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
-  <Metadata>
-    <Identity Id="NestedUnitTests.a2dc821e-8edc-4842-9da4-515cfcd19006" Version="0.2.1" Language="en-US" Publisher="lsoft" />
-    <DisplayName>Nested Unit Tests</DisplayName>
-    <Description>What's about to move your unit tests closer to the code?</Description>
-    <Icon>Resources\logo.png</Icon>
-    <PreviewImage>Resources\logo.png</PreviewImage>
-  </Metadata>
-  <Installation>
-    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.0, 17.0)" />
-  </Installation>
-  <Prerequisites>
-    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[16.0,)" DisplayName="Visual Studio core editor" />
-  </Prerequisites>
-  <Assets>
-    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
-  </Assets>
+    <Metadata>
+        <Identity Id="NestedUnitTests.a2dc821e-8edc-4842-9da4-515cfcd19006" Version="0.3" Language="en-US" Publisher="lsoft" />
+        <DisplayName>Nested Unit Tests</DisplayName>
+        <Description xml:space="preserve">What's about to move your unit tests closer to the code?</Description>
+        <Icon>Resources\logo.png</Icon>
+        <PreviewImage>Resources\logo.png</PreviewImage>
+    </Metadata>
+    <Installation>
+        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.0, 17.0)" />
+    </Installation>
+    <Prerequisites>
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[16.0,)" DisplayName="Visual Studio core editor" />
+    </Prerequisites>
+    <Assets>
+        <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+    </Assets>
 </PackageManifest>
