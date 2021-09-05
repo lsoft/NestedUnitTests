@@ -28,20 +28,20 @@ namespace NestedUnitTests
         {
             #region creating an unit tests file
 
-            var file = await VS.Solutions.GetActiveItemAsync();
+            var solutionItem = await VS.Solutions.GetActiveItemAsync();
 
-            if (file == null)
+            if (solutionItem == null)
             {
                 await VS.MessageBox.ShowErrorAsync($"Please choose physical file to append unit test file!");
                 return;
             }
-            if (file.Type != SolutionItemType.PhysicalFile)
+            if (solutionItem.Type != SolutionItemType.PhysicalFile)
             {
                 await VS.MessageBox.ShowErrorAsync($"Unit tests file can be appended only to physical file!");
                 return;
             }
 
-            var fileFullPath = file.FullPath;
+            var fileFullPath = solutionItem.FullPath;
 
             var targetNamespace = await GetTargetNamespaceAsync(fileFullPath);
             if (string.IsNullOrEmpty(targetNamespace))
@@ -83,13 +83,13 @@ namespace NestedUnitTests
             }
             else
             {
-                await ProcessLegacyStyleProjectAsync(project, fileFullPath, testFilePath);
+                await ProcessLegacyStyleProjectAsync(project, (PhysicalFile)solutionItem, testFilePath);
             }
         }
 
         private async Task ProcessLegacyStyleProjectAsync(
             Community.VisualStudio.Toolkit.Project project,
-            string fileFullPath,
+            PhysicalFile rootPhysicalFile,
             string testFilePath
             )
         {
@@ -98,9 +98,9 @@ namespace NestedUnitTests
                 throw new ArgumentNullException(nameof(project));
             }
 
-            if (fileFullPath is null)
+            if (rootPhysicalFile is null)
             {
-                throw new ArgumentNullException(nameof(fileFullPath));
+                throw new ArgumentNullException(nameof(rootPhysicalFile));
             }
 
             if (testFilePath is null)
@@ -108,21 +108,19 @@ namespace NestedUnitTests
                 throw new ArgumentNullException(nameof(testFilePath));
             }
 
-            if (!General.Instance.OpenNewFile)
-            {
-                await VS.MessageBox.ShowAsync($"Unit tests file successfully added!");
-                return;
-            }
+            //community sdk approach
+            //var testPhysicalFiles = await project.AddExistingFilesAsync(testFilePath);
+            //var testPhysicalFile = testPhysicalFiles.First();
+            //await rootPhysicalFile.AddNestedFileAsync(testPhysicalFile);
 
-            await project.AddExistingFilesAsync(testFilePath);
-
+            //classic approach
             var dte = await Package.GetServiceAsync(typeof(DTE)) as DTE2;
             if (dte == null)
             {
                 return;
             }
 
-            var documentItem = dte.Solution.FindProjectItem(fileFullPath);
+            var documentItem = dte.Solution.FindProjectItem(rootPhysicalFile.FullPath);
             if (documentItem == null)
             {
                 return;
@@ -130,9 +128,11 @@ namespace NestedUnitTests
 
             documentItem.ProjectItems.AddFromFile(testFilePath);
 
-            //var frame = await document.OpenAsync();
-
-            //await VS.Documents.OpenViaProjectAsync(testFilePath);
+            if (!General.Instance.OpenNewFile)
+            {
+                await VS.MessageBox.ShowAsync($"Unit tests file successfully added!");
+                return;
+            }
 
             await VS.Documents.OpenAsync(testFilePath);
         }
